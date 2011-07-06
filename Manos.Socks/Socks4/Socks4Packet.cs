@@ -22,7 +22,7 @@ namespace Manos.Socks
 		public override byte[] Serialize()
 		{
 			byte[] prefix = base.Serialize();
-            byte[] userIdBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(UserId);
+			byte[] userIdBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(UserId);
 			byte[] packet = new byte[prefix.Length + userIdBytes.Length + 1];
             
 			prefix.CopyTo(packet, 0);
@@ -71,15 +71,15 @@ namespace Manos.Socks
 			return data;
 		}
 		
-        public const byte VERSION_NUMBER = 4;
+		public const byte VERSION_NUMBER = 4;
 		
-        public const byte CMD_CONNECT = 0x01;
-        public const byte CMD_BIND = 0x02;
+		public const byte CMD_CONNECT = 0x01;
+		public const byte CMD_BIND = 0x02;
 		
-        public const byte CMD_REPLY_REQUEST_GRANTED = 90;
-        public const byte CMD_REPLY_REQUEST_REJECTED_OR_FAILED = 91;
-        public const byte CMD_REPLY_REQUEST_REJECTED_CANNOT_CONNECT_TO_IDENTD = 92;
-        public const byte CMD_REPLY_REQUEST_REJECTED_DIFFERENT_IDENTD = 93;
+		public const byte CMD_REPLY_REQUEST_GRANTED = 90;
+		public const byte CMD_REPLY_REQUEST_REJECTED_OR_FAILED = 91;
+		public const byte CMD_REPLY_REQUEST_REJECTED_CANNOT_CONNECT_TO_IDENTD = 92;
+		public const byte CMD_REPLY_REQUEST_REJECTED_DIFFERENT_IDENTD = 93;
 		
 		public static bool CheckVersion(byte[] packet)
 		{
@@ -145,35 +145,35 @@ namespace Manos.Socks
 			return CreatePacket(System.Net.IPAddress.Parse(host), port, userId);
 		}
 		
-        private static byte[] GetIPAddressBytes(string destinationHost)
-        {
-            System.Net.IPAddress ipAddr = null;
-
-            //  if the address doesn't parse then try to resolve with dns
-            if (!System.Net.IPAddress.TryParse(destinationHost, out ipAddr)) {
-                try {
-                    ipAddr = System.Net.Dns.GetHostEntry(destinationHost).AddressList[0];
-                } catch (Exception ex) {
-                    throw new Exception(String.Format("A error occurred while attempting to DNS resolve the host name {0}.", destinationHost), ex);
-                }
-            }
-           
-            // return address bytes
-            return ipAddr.GetAddressBytes();            
-        }
-
-        /// <summary>
-        /// Translate the destination port value to a byte array.
-        /// </summary>
-        /// <param name="value">Destination port.</param>
-        /// <returns>Byte array representing an 16 bit port number as two bytes.</returns>
-        private static byte[] GetDestinationPortBytes(int value)
-        {
-            byte[] array = new byte[2];
-            array[0] = Convert.ToByte(value / 256);
-            array[1] = Convert.ToByte(value % 256);
-            return array;
-        }
+		private static byte[] GetIPAddressBytes(string destinationHost)
+		{
+			System.Net.IPAddress ipAddr = null;
+			
+			//  if the address doesn't parse then try to resolve with dns
+			if (!System.Net.IPAddress.TryParse(destinationHost, out ipAddr)) {
+				try {
+					ipAddr = System.Net.Dns.GetHostEntry(destinationHost).AddressList[0];
+				} catch (Exception ex) {
+					throw new Exception(String.Format("A error occurred while attempting to DNS resolve the host name {0}.", destinationHost), ex);
+				}
+			}
+			
+			// return address bytes
+			return ipAddr.GetAddressBytes();            
+		}
+		
+		/// <summary>
+		/// Translate the destination port value to a byte array.
+		/// </summary>
+		/// <param name="value">Destination port.</param>
+		/// <returns>Byte array representing an 16 bit port number as two bytes.</returns>
+		private static byte[] GetDestinationPortBytes(int value)
+		{
+			byte[] array = new byte[2];
+			array[0] = Convert.ToByte(value / 256);
+			array[1] = Convert.ToByte(value % 256);
+			return array;
+		}
 		
 	}
 }

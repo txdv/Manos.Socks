@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manos.Socks", "Manos.Socks\Manos.Socks.csproj", "{03BA992B-3AF7-4894-A33D-95A2350E4240}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{1616C9F1-C4E8-475F-B401-B1514576F475}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03BA992B-3AF7-4894-A33D-95A2350E4240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03BA992B-3AF7-4894-A33D-95A2350E4240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03BA992B-3AF7-4894-A33D-95A2350E4240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03BA992B-3AF7-4894-A33D-95A2350E4240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1616C9F1-C4E8-475F-B401-B1514576F475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1616C9F1-C4E8-475F-B401-B1514576F475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1616C9F1-C4E8-475F-B401-B1514576F475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1616C9F1-C4E8-475F-B401-B1514576F475}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Test\Test.csproj
+	EndGlobalSection
+EndGlobal

@@ -7,16 +7,9 @@ namespace Manos.Socks
 {
 	public class Socks4ServerInfo
 	{
-		public Socks4ServerInfo()
-		{
-			Overhead = new Queue<byte[]>();
-		}
-		
 		public bool FirstMessage { get; set; }
 		public Socket DestinationSocket { get; set; }
 		public Socket SourceSocket { get; set; }
-		public bool DestinationReady { get; set; }
-		public Queue<byte[]> Overhead { get; set; }
 	}
 	
 	public class Socks4Server
@@ -74,6 +67,7 @@ namespace Manos.Socks
 			var sourcePort = sourceSocket.Port;
 			
 			if (info[sourcePort].FirstMessage) {
+				sourceStream.PauseReading();
 
 				var data = Socks4Packet.GetPacketInfo(buffer.Bytes, buffer.Position, buffer.Length);
 				
@@ -99,13 +93,9 @@ namespace Manos.Socks
 					var destinationSocket = Context.CreateSocket();
 					info[sourcePort].DestinationSocket = destinationSocket;
 					destinationSocket.Connect(data.IPAddress.ToString(), data.Port, delegate {
+						sourceStream.ResumeReading();
 						var destinationStream = destinationSocket.GetSocketStream();
-						info[sourcePort].DestinationReady = true;
 						
-						var queue = info[sourcePort].Overhead;
-						while (queue.Count > 0) {
-							destinationStream.Write(queue.Dequeue());
-						}
 						destinationStream.Read(delegate (ByteBuffer destinationReadBuffer) {
 							sourceStream.Write(destinationReadBuffer);
 						}, delegate (Exception exception) { }, delegate {
@@ -126,15 +116,7 @@ namespace Manos.Socks
 			} else {
 				if (info.ContainsKey(sourcePort)) {
 					var sockInfo = info[sourcePort];
-					if (!sockInfo.DestinationReady) {
-						byte[] bytes = new byte[buffer.Length];
-						for (int i = 0; i < buffer.Length; i++) {
-							bytes[i] = buffer.Bytes[buffer.Position + i];
-						}
-						sockInfo.Overhead.Enqueue(bytes);
-					} else {
-						sockInfo.DestinationSocket.GetSocketStream().Write(buffer);
-					}
+					sockInfo.DestinationSocket.GetSocketStream().Write(buffer);
 				}
 			}
 		}

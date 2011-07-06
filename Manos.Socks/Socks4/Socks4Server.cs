@@ -28,6 +28,24 @@ namespace Manos.Socks
 		
 		public bool VersionCheck { get; set; }
 		
+		public int ActiveConnections {
+			get {
+				return info.Count;
+			}
+		}
+		
+		public Socks4ServerInfo[] ConnectionInfo {
+			get {
+				var list = new Socks4ServerInfo[info.Count];
+				int i = 0;
+				foreach (var kvp in info) {
+					list[i] = kvp.Value;
+					i++;
+				}
+				return list;
+			}
+		}
+		
 		public Socks4Server(Context context, Socket socket)
 		{
 			Context = context;
